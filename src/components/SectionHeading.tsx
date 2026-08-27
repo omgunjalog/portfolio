@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Reveal } from "./ui/Reveal";
 import { KineticText } from "./ui/KineticText";
+import { Magnetic } from "./ui/Magnetic";
 
 export function SectionHeading({
   index,
@@ -25,7 +26,9 @@ export function SectionHeading({
         </div>
       </Reveal>
       <h2 className="t-head">
-        <KineticText text={title} />
+        <Magnetic strength={0.14}>
+          <KineticText text={title} />
+        </Magnetic>
       </h2>
       {children && (
         <Reveal delay={0.15}>

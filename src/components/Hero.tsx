@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { site } from "@/lib/site";
 import { useIntroReady } from "@/lib/useIntroReady";
 import { MagneticButton } from "./ui/MagneticButton";
+import { Magnetic } from "./ui/Magnetic";
 import { Button } from "./ui/Button";
 
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
@@ -50,12 +51,14 @@ export function Hero() {
         </motion.div>
 
         <h1 className="t-hero max-w-[18ch]">
-          <motion.span variants={item} transition={{ duration: 0.7, ease }} className="block">
-            I build the thing
-          </motion.span>
-          <motion.span variants={item} transition={{ duration: 0.7, ease }} className="block">
-            you need <span className="t-serif accent-text">shipped.</span>
-          </motion.span>
+          <Magnetic strength={0.08} className="block">
+            <motion.span variants={item} transition={{ duration: 0.7, ease }} className="block">
+              I build the thing
+            </motion.span>
+            <motion.span variants={item} transition={{ duration: 0.7, ease }} className="block">
+              you need <span className="t-serif accent-text">shipped.</span>
+            </motion.span>
+          </Magnetic>
         </h1>
 
         <motion.p
