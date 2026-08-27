@@ -43,9 +43,10 @@ export function Navbar() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className="text-sm text-ink-2 transition-colors hover:text-ink"
+                className="group relative text-sm text-ink-2 transition-colors hover:text-ink"
               >
                 {item.label}
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-300 ease-out group-hover:scale-x-100" />
               </Link>
             </li>
           ))}

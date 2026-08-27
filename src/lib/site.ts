@@ -6,7 +6,7 @@ export const site = {
   email: "omgunjal1414@gmail.com",
   github: "https://github.com/omgunjalog",
   location: "Sangamner, Maharashtra, India",
-  url: "https://omgunjal.vercel.app",
+  url: "https://portfolio-eight-lemon-91.vercel.app",
   availability: "Open to new projects",
   currentlyBuilding:
     "Lettit — an escrow-first marketplace for the creator economy.",
