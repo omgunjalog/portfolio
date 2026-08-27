@@ -1,26 +1,208 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Engineering-editorial system.
+   Structure over glow: graph-paper grid, hairline rules,
+   numbered section indices, tabular mono metadata, and a
+   serif display face for tension against the grotesk.
+   One warm accent (saffron), pulled from the real work.
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b0b0c;
+  --bg-2: #101012;
+  --panel: #131315;
+  --line: #24242a;      /* hairline */
+  --line-2: #34343c;    /* stronger hairline */
+
+  --ink: #f2f0ea;       /* warm off-white */
+  --ink-2: #9c998f;     /* muted */
+  --ink-3: #64615a;     /* faint */
+
+  --accent: #f4a52a;    /* saffron / amber */
+  --accent-2: #ff8a1a;
+  --accent-ink: #180f02;
+
+  --radius: 3px;
+  --maxw: 1180px;
+  --rail: 84px;         /* left margin rail width on desktop */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-panel: var(--panel);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  font-feature-settings: "ss01", "cv01";
+}
+
+/* ---- Type scale: hero / head / body / label + serif display ---- */
+.t-hero {
+  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  font-weight: 560;
+}
+.t-head {
+  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  font-weight: 560;
+}
+.t-body {
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.6;
+}
+/* Mono system label — the connective tissue of the whole design */
+.t-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 500;
+}
+/* Serif display — used sparingly, for accent words + pull quotes */
+.t-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.accent-text {
+  color: var(--accent);
+}
+
+/* Flat panel: hairline border, no glow. Structure, not float. */
+.panel {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+/* Graph-paper backdrop, drawn once, fixed. */
+.graph-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Section index marker, e.g. "§ 03 / Selected Work" */
+.sec-index {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border-radius: 0;
+}
+
+/* Story sections: a light veil over the organism (so it stays present, not
+   hidden) with text-shadows that keep copy legible over the moving particles. */
+.story-sec {
+  position: relative;
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+.story-sec :where(h1, h2, h3) {
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.85);
+}
+.story-sec :where(p, li) {
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.75);
+}
+
+/* hide the native pointer once the custom cursor is live (fine pointers only) */
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes sound-bar {
+  0%,
+  100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

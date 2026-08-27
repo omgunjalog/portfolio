@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Om Gunjal — Portfolio & Freelance Site
 
-## Getting Started
+Personal portfolio and freelance business site. Next.js 16 (App Router) ·
+TypeScript · Tailwind CSS v4 · Motion · deployed on Vercel.
 
-First, run the development server:
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where the content lives
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+All project content is **data, not markup** — adding or editing a project is a
+content change, never a code change.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **`src/lib/projects.ts`** — every project as a typed `Project`, plus full
+  case-study copy for the featured ones. Set `caseStudy` to generate a
+  `/work/<slug>` page automatically. Real screenshots go in `public/work/<slug>/`;
+  projects without a screenshot render an honest branded cover (never a fake
+  capture). `assetsNeeded` renders a visible "assets to add" block so nothing
+  placeholder ever reads as finished.
+- **`src/lib/site.ts`** — name, role, contact email, links, and the
+  "currently building" line.
 
-## Learn More
+## Contact form
 
-To learn more about Next.js, take a look at the following resources:
+`src/app/api/contact/route.ts` validates server-side (name/email/message +
+honeypot). With `RESEND_API_KEY` set it sends email via Resend; without it, the
+form falls back to opening the visitor's mail client prefilled. API keys are
+never exposed to the browser. See `.env.example`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy (Vercel)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Push this repo to GitHub.
+2. Import it in Vercel — framework auto-detected, no config needed.
+3. (Optional) add `RESEND_API_KEY` in Vercel → Settings → Environment Variables
+   to enable server-side email.
+4. (Optional) add a custom domain; update `site.url` in `src/lib/site.ts`.
 
-## Deploy on Vercel
+## Still to add before a client-facing send
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See the "assets to add" blocks on the Lettit, Lumora, and NutriScan case
+studies, and swap any generated project covers for real screenshots as they
+become available.
