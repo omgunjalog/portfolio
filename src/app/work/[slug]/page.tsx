@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -143,20 +144,26 @@ export default async function CaseStudyPage({
             )}
           </header>
 
-          {/* Lead image */}
+          {/* Lead image — morphs from the project card via View Transitions */}
           {project.image ? (
-            <Reveal as="div" className="mt-10">
-              <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-line">
-                <Image
-                  src={project.image}
-                  alt={`${project.title} — ${project.tagline}`}
-                  fill
-                  sizes="(max-width: 1120px) 100vw, 1120px"
-                  className="object-cover object-top"
-                  priority
-                />
-              </div>
-            </Reveal>
+            <div className="mt-10">
+              <ViewTransition
+                name={`project-${project.slug}`}
+                share="morph"
+                default="none"
+              >
+                <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-line">
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} — ${project.tagline}`}
+                    fill
+                    sizes="(max-width: 1120px) 100vw, 1120px"
+                    className="object-cover object-top"
+                    priority
+                  />
+                </div>
+              </ViewTransition>
+            </div>
           ) : null}
 
           {/* Metrics */}

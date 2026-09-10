@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, type ReactNode } from "react";
+import { ViewTransition } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { categoryLabel, statusLabel } from "@/lib/projects";
@@ -148,7 +149,13 @@ export function FeatureRow({ project, n }: { project: Project; n: number }) {
             style={reduce ? undefined : { x: mediaX, opacity: fade }}
             className={flip ? "md:order-2" : ""}
           >
-            <FeatureMedia project={project} />
+            <ViewTransition
+              name={`project-${project.slug}`}
+              share="morph"
+              default="none"
+            >
+              <FeatureMedia project={project} />
+            </ViewTransition>
           </motion.div>
           <motion.div
             style={reduce ? undefined : { x: textX, opacity: fade }}

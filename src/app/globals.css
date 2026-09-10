@@ -169,6 +169,32 @@ body {
   text-shadow: 0 1px 16px rgba(0, 0, 0, 0.75);
 }
 
+/* ---- View Transitions: project card ⇄ case-study hero morph ---- */
+::view-transition-group(.morph) {
+  animation-duration: 460ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  35% {
+    filter: blur(4px);
+  }
+}
+/* keep the page interactive under the transition overlay */
+::view-transition {
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
 /* hide the native pointer once the custom cursor is live (fine pointers only) */
 .has-custom-cursor,
 .has-custom-cursor * {
