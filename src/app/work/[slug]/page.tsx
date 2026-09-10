@@ -14,6 +14,7 @@ import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Counter } from "@/components/ui/Counter";
+import { CaseGallery } from "@/components/CaseGallery";
 
 export function generateStaticParams() {
   return caseStudyProjects.map((p) => ({ slug: p.slug }));
@@ -183,26 +184,9 @@ export default async function CaseStudyPage({
             <Block title="Reflection" items={cs.reflection} />
           </div>
 
-          {/* Gallery */}
+          {/* Gallery — drag to scrub */}
           {project.gallery && project.gallery.length > 0 && (
-            <section className="mt-10 border-t border-line pt-10">
-              <p className="t-label mb-6">Gallery</p>
-              <div className="grid gap-5 sm:grid-cols-2">
-                {project.gallery.map((g) => (
-                  <Reveal as="div" key={g.src}>
-                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-line">
-                      <Image
-                        src={g.src}
-                        alt={g.alt}
-                        fill
-                        sizes="(max-width: 640px) 100vw, 50vw"
-                        className="object-cover object-top"
-                      />
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </section>
+            <CaseGallery images={project.gallery} />
           )}
 
           {/* Honest placeholders for assets still needed */}
